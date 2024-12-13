@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/spa [application/json]
+    activate server
+    Note right of browser: The server adds the new note from the form data to existing notes
+    deactivate server
