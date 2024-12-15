@@ -1,0 +1,29 @@
+.success-notification {
+  border: 5px solid green;
+  color: green;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+  padding: 8px;
+  background-color: rgba(180, 180, 180, 0.5);
+}
+
+.error-notification {
+  border: 5px solid red;
+  color: red;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 14px;
+  padding: 8px;
+  background-color: rgba(180, 180, 180, 0.5);
+}
+
+.notification {
+  border: 5px solid yellow;
+  color: yellow;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+  padding: 8px;
+  background-color: rgba(180, 180, 180, 0.5);
+}
