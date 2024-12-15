@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import axios from "axios";
+import personService from "./services/phonebook";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -16,12 +16,29 @@ const App = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to the phonebook`);
+    const oldPerson = persons.find((person) => person.name === newName);
+    if (oldPerson) {
+      // alert(`${newName} is already added to the phonebook`);
+      personService
+        .update({ ...oldPerson, number: newNumber }, oldPerson.id)
+        .then((updatedPerson) => {
+          setPersons(
+            persons.map((person) => {
+              return person.id === oldPerson.id
+                ? { ...oldPerson, number: updatedPerson.number }
+                : person;
+            })
+          );
+          setNewName("");
+          setNewNumber("");
+        });
     } else {
-      setPersons(persons.concat({ name: newName, number: newNumber }));
-      setNewName("");
-      setNewNumber("");
+      const newPerson = { name: newName, number: newNumber };
+      personService.create(newPerson).then((addedPerson) => {
+        setPersons(persons.concat(addedPerson));
+        setNewName("");
+        setNewNumber("");
+      });
     }
   };
 
@@ -35,10 +52,18 @@ const App = () => {
     setSearchText(e.target.value);
   };
 
+  const handlePersonDelete = (deletedPerson) => {
+    if (window.confirm(`Delete ${deletedPerson.name}?`)) {
+      personService
+        .remove(deletedPerson.id)
+        .then(() =>
+          setPersons(persons.filter((person) => person.id !== deletedPerson.id))
+        );
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((respose) => setPersons(respose.data));
+    personService.getAll().then((intitalPersons) => setPersons(intitalPersons));
   }, []);
 
   return (
@@ -57,7 +82,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons searchText={searchText} persons={persons} />
+      <Persons
+        searchText={searchText}
+        persons={persons}
+        handlePersonDelete={handlePersonDelete}
+      />
     </div>
   );
 };
