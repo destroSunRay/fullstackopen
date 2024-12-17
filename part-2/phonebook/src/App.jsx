@@ -20,6 +20,27 @@ const App = () => {
     setNewName(e.target.value);
   };
 
+  const handleAPIError = (error, oldPerson) => {
+    // console.log("error", error);
+    console.log(error.response.data.error);
+    if (error.status === 400) {
+      setNotification({
+        message: error.response.data.error,
+        type: "error",
+      });
+      setTimeout(() => setNotification({ message: null, type: null }), 3000);
+    } else {
+      setNotification({
+        message: `Information of ${newName} has already been removed from server.`,
+        type: "error",
+      });
+      setTimeout(() => setNotification({ message: null, type: null }), 3000);
+      setPersons(persons.filter((person) => person.id !== oldPerson.id));
+      setNewName("");
+      setNewNumber("");
+    }
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const oldPerson = persons.find((person) => person.name === newName);
@@ -35,34 +56,36 @@ const App = () => {
                 : person;
             })
           );
-          setNewName("");
-          setNewNumber("");
-        })
-        .catch(() => {
           setNotification({
-            message: `Information of ${newName} has already been removed from server.`,
-            type: "error",
+            message: `Updated the phone number of ${newName}`,
+            type: "success",
           });
           setTimeout(
             () => setNotification({ message: null, type: null }),
             3000
           );
-          setPersons(persons.filter((person) => person.id !== oldPerson.id));
           setNewName("");
           setNewNumber("");
-        });
+        })
+        .catch((error) => handleAPIError(error, oldPerson));
     } else {
       const newPerson = { name: newName, number: newNumber };
-      personService.create(newPerson).then((addedPerson) => {
-        setPersons(persons.concat(addedPerson));
-        setNotification({
-          message: `Added ${newName}`,
-          type: "success",
-        });
-        setTimeout(() => setNotification({ message: null, type: null }), 3000);
-        setNewName("");
-        setNewNumber("");
-      });
+      personService
+        .create(newPerson)
+        .then((addedPerson) => {
+          setPersons(persons.concat(addedPerson));
+          setNotification({
+            message: `Added ${newName}`,
+            type: "success",
+          });
+          setTimeout(
+            () => setNotification({ message: null, type: null }),
+            3000
+          );
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => handleAPIError(error));
     }
   };
 
