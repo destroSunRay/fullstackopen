@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "medium",
+  "author": "Surya",
+  "url": "kjahsdkh.Content-MD5",
+  "likes": 500
+}
