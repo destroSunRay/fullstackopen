@@ -80,6 +80,40 @@ describe('verify that if the title or url properties are missing from the reques
   })
 })
 
+test('test the put api, verify the object has been updated', async () => {
+  const blog = {
+    title: "Canonical string reduction",
+    author: "Edsger W. Dijkstra",
+    url: "ajksbd.com/blogs"
+  }
+
+  const response = await api.post('/api/blogs').send(blog)
+  const id = response.body.id
+
+  const newBlog = {
+    title: "Narnia",
+    author: "C. W. Levis",
+    // url: "ajksbd.com/blogs"
+  }
+  const updatedBlog = await api.put(`/api/blogs/${id}`).send(newBlog)
+  assert.deepStrictEqual(updatedBlog.body, { ...response.body, ...newBlog })
+})
+
+test('test delete api, verify the blog has been deleted', async () => {
+  const blog = {
+    title: "Canonical string reduction",
+    author: "Edsger W. Dijkstra",
+    url: "ajksbd.com/blogs"
+  }
+
+  const response = await api.post('/api/blogs').send(blog)
+  const id = response.body.id
+
+  await api.delete(`/api/blogs/${id}`)
+  const blogs = await api.get('/api/blogs')
+  assert.strictEqual(blogs.body.length, 0)
+})
+
 beforeEach(async () => {
   await Blog.deleteMany({})
 })
