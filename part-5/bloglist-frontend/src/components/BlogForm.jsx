@@ -23,7 +23,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
       title,
       author,
       url,
-      toogleBlogForm,
+      toogleBlogForm
     }
   })
 
@@ -40,6 +40,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
                   <td>
                     <input
                       type="text"
+                      placeholder="Title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                     />
@@ -50,6 +51,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
                   <td>
                     <input
                       type="text"
+                      placeholder="Jhon Doe"
                       value={author}
                       onChange={(e) => setAuthor(e.target.value)}
                     />
@@ -60,6 +62,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
                   <td>
                     <input
                       type="text"
+                      placeholder="example.com"
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
                     />
@@ -84,7 +87,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
 
 BlogForm.displayName = 'BlogForm'
 BlogForm.propTypes = {
-  handleCreateNewBlog: PropTypes.func.isRequired,
+  handleCreateNewBlog: PropTypes.func.isRequired
 }
 
 export default BlogForm

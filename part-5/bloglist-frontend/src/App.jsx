@@ -43,7 +43,7 @@ const App = () => {
       setBlogs(blogs.concat(response))
       blogFormRef.current.toogleBlogForm()
       setNotification({
-        message: `new blog ${newBlog.title} has been added by, ${newBlog.author}`,
+        message: `new blog ${newBlog.title} has been added by, ${newBlog.author}`
       })
     } catch (error) {
       setNotification({ message: error.message, type: 'error' })
@@ -63,9 +63,10 @@ const App = () => {
   }
   const handleRemoveBlog = async (blog) => {
     try {
+      console.log(blog)
       if (
-        blog.name === user.name &&
-        blog.username === user.username &&
+        blog.user.name === user.name &&
+        blog.user.username === user.username &&
         window.confirm(`Remove blog ${blog.title}, by ${blog.author}`)
       ) {
         await blogService.remove(blog.id)
@@ -92,7 +93,7 @@ const App = () => {
       setUser(localUser)
       setNotification({
         message: `Welcome back, ${localUser.name}!`,
-        type: 'success',
+        type: 'success'
       })
     }
   }, [])

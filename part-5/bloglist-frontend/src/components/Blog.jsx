@@ -14,17 +14,19 @@ const Blog = ({ blog, handleBlogUpdate, handleRemoveBlog }) => {
     paddingBottom: 2,
     border: 'solid',
     borderWidth: 1,
-    marginBottom: 5,
+    marginBottom: 5
   }
 
   return (
     <div style={blogStyle}>
-      {blog.title} || {blog.author}{' '}
+      <span>
+        {blog.title} || {blog.author}
+      </span>
       <button onClick={handleToogleDetails}>
         {showFullDetails ? 'hide' : 'view'}
       </button>
       {showFullDetails ? (
-        <>
+        <div className="blog-details">
           <div>{blog.url}</div>
           <div>
             likes {blog.likes}{' '}
@@ -32,7 +34,7 @@ const Blog = ({ blog, handleBlogUpdate, handleRemoveBlog }) => {
           </div>
           <div>{blog.user.name}</div>
           <button onClick={() => handleRemoveBlog(blog)}>remove</button>
-        </>
+        </div>
       ) : null}
     </div>
   )
@@ -42,7 +44,7 @@ Blog.displayName = 'Blog'
 Blog.prototype = {
   blog: PropTypes.object.isRequired,
   handleBlogUpdate: PropTypes.func.isRequired,
-  handleRemoveBlog: PropTypes.func.isRequired,
+  handleRemoveBlog: PropTypes.func.isRequired
 }
 
 export default Blog
