@@ -6,7 +6,7 @@ const Login = ({
   username,
   password,
   setUsername,
-  setPassword,
+  setPassword
 }) => {
   return (
     <>
@@ -15,6 +15,7 @@ const Login = ({
           <label>
             username &nbsp;
             <input
+              data-testid="username"
               name="username"
               type="text"
               value={username}
@@ -26,6 +27,7 @@ const Login = ({
           <label>
             password &nbsp;
             <input
+              data-testid="password"
               name="password"
               type="password"
               value={password}
@@ -47,7 +49,7 @@ Login.prototype = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   setUsername: PropTypes.func.isRequired,
-  setPassword: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired
 }
 
 export default Login

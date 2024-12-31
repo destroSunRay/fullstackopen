@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-const Blog = ({ blog, handleBlogUpdate, handleRemoveBlog }) => {
+const Blog = ({ blog, user, handleBlogUpdate, handleRemoveBlog }) => {
   const [showFullDetails, setShowFullDetails] = useState(false)
 
   const handleToogleDetails = () => {
@@ -17,8 +17,18 @@ const Blog = ({ blog, handleBlogUpdate, handleRemoveBlog }) => {
     marginBottom: 5
   }
 
+  const removeButton = () => {
+    if (blog.user.name === user.name && blog.user.username === user.username) {
+      return (
+        <div>
+          <button onClick={() => handleRemoveBlog(blog)}>remove</button>
+        </div>
+      )
+    }
+  }
+
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <span>
         {blog.title} || {blog.author}
       </span>
@@ -33,7 +43,7 @@ const Blog = ({ blog, handleBlogUpdate, handleRemoveBlog }) => {
             <button onClick={() => handleBlogUpdate(blog)}>like</button>
           </div>
           <div>{blog.user.name}</div>
-          <button onClick={() => handleRemoveBlog(blog)}>remove</button>
+          {removeButton()}
         </div>
       ) : null}
     </div>
@@ -41,10 +51,11 @@ const Blog = ({ blog, handleBlogUpdate, handleRemoveBlog }) => {
 }
 
 Blog.displayName = 'Blog'
-Blog.prototype = {
+Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   handleBlogUpdate: PropTypes.func.isRequired,
-  handleRemoveBlog: PropTypes.func.isRequired
+  handleRemoveBlog: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default Blog

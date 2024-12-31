@@ -39,6 +39,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
                   <td>title</td>
                   <td>
                     <input
+                      data-testid="title"
                       type="text"
                       placeholder="Title"
                       value={title}
@@ -50,6 +51,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
                   <td>author</td>
                   <td>
                     <input
+                      data-testid="author"
                       type="text"
                       placeholder="Jhon Doe"
                       value={author}
@@ -61,6 +63,7 @@ const BlogForm = forwardRef(({ handleCreateNewBlog }, ref) => {
                   <td>url</td>
                   <td>
                     <input
+                      data-testid="url"
                       type="text"
                       placeholder="example.com"
                       value={url}

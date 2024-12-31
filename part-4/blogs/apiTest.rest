@@ -20,11 +20,21 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3001/api/users
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "name": "test",
+  "username": "testuser",
+  "password": "password"
+}
+
+###
+GET http://localhost:3003/api/users
 Content-Type: application/json
 
 ###
-GET http://localhost:3001/api/blogs
+GET http://localhost:3003/api/blogs
 Content-Type: application/json
 
 ###
@@ -33,5 +43,14 @@ Content-Type: application/json
 
 {
   "username": "Surya",
+  "password": "password"
+}
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
   "password": "password"
 }

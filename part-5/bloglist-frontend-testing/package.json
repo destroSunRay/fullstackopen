@@ -1,0 +1,16 @@
+{
+  "name": "bloglist-frontend-testing",
+  "version": "0.0.0",
+  "description": "Testing for bloglist-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "author": "Surya",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2"
+  }
+}
