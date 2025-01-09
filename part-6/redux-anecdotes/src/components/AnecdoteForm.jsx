@@ -5,12 +5,12 @@ import { setNotification } from "../reducers/notificationReducer";
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
-  const addAnecdote = (e) => {
+  const addAnecdote = async (e) => {
     e.preventDefault();
-    const anecdote = e.target.anecdote.value;
+    const content = e.target.anecdote.value;
     e.target.anecdote.value = "";
-    dispatch(createAnecdote(anecdote));
-    dispatch(setNotification(`created new anecdote: '${anecdote}'`));
+    dispatch(createAnecdote(content));
+    dispatch(setNotification(`created new anecdote: '${content}'`, 5));
   };
 
   return (

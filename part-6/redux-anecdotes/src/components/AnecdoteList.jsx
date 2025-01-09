@@ -4,14 +4,14 @@ import { setNotification } from "../reducers/notificationReducer";
 
 const AnecdoteList = () => {
   const state = useSelector((state) => state);
-  const anecdotes = state.anecdotes.filter((anecdote) => {
+  const anecdotes = state.anecdotes?.filter((anecdote) => {
     return anecdote.content.toLowerCase().includes(state.filter);
   });
   const dispatch = useDispatch();
 
   const vote = (anecdote) => {
     dispatch(voteAnecdote(anecdote.id));
-    dispatch(setNotification(`voted for anecdote: '${anecdote.content}'`));
+    dispatch(setNotification(`voted for anecdote: '${anecdote.content}'`, 10));
     // console.log("vote", id);
   };
 
