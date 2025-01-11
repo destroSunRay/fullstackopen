@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Routes, Route, useMatch, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useField } from "./hooks";
 
 const Menu = () => {
   const padding = {
@@ -72,49 +73,45 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
+  const content = useField("text");
+  const author = useField("text");
+  const info = useField("text");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.fields.value,
+      author: author.fields.value,
+      info: info.fields.value,
       votes: 0,
     });
+  };
+
+  const handleFormReset = (e) => {
+    e.preventDefault();
+    content.reset();
+    author.reset();
+    info.reset();
   };
 
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onReset={handleFormReset}>
         <div>
           content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <input name="content" {...content.fields} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input name="author" {...author.fields} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input name="info" {...info.fields} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button type="reset">reset</button>
       </form>
     </div>
   );
@@ -139,7 +136,7 @@ const Anecdote = ({ anecdote }) => {
 };
 
 Anecdote.propTypes = {
-  anecdote: PropTypes.any.isRequired,
+  anecdote: PropTypes.any,
 };
 
 const App = () => {
